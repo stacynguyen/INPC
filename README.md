@@ -14,7 +14,9 @@ can use for further computations.
 (CONEVAL's method of computing the basic basket is rather obscure and does not, as far as I understand,
 take the nourishment side of the equation into account).
 
-The results are in the report. Susprisingly enough (we began from a different starting point), our
+The results are in [the report](INPC.pdf). 
+
+Susprisingly enough (we began from a different starting point), our
 results are not too different from the official ones, although our result for people under the poverty
 line once the rent credit is deducted is somewhat higher.
 
@@ -28,7 +30,7 @@ plots.](R_code_INPC2.txt) In all cases the paths need to be revised both for inp
 ## Data
 
 INEGI's database. Unfortunately, they don't allow a massive download of all the data so we had to do it
-piecewise and ended up with a lot of them. [The zipped version of the entire set.](CSV)
+piecewise and ended up with a lot of them. [The zipped version of the entire set.](CSV.rar)
 
 
 ## Status
