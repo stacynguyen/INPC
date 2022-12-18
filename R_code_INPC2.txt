@@ -1,0 +1,66 @@
+# source('C:\\java\\R_code_INPC2.txt')
+
+library(ggplot2)
+library(dplyr)
+library(lubridate)
+
+names <- c(
+"Arroz", "Galletas", "Harinas de trigo", "Maiz", "Masa y harina de maiz", "Pan blanco", "Pasta para sopa", 
+"Tortilla de maiz", "Carne de cerdo", "Carne de res", "Pollo", "Salchichas", "Pescado en lata", "Pescado fresco", 
+"Huevo", "Leche pasteurizada", "Queso fresco", "Aceite vegetal", "Aguacate", "Limon", "Manzana", "Naranja", 
+"Papaya", "Platanos", "Calabacita", "Cebolla", "Frijol procesado", "Jitomate", "Chiles frescos", 
+"Papa", "Zanahoria", "Azucar", "Cafe tostado"
+)
+
+codes <- c(
+1, 4, 5, 6, 7, 8, 11, 14, 17, 18, 22, 23, 26, 30, 32, 36, 39, 43, 
+46, 49, 50, 52, 55, 58, 61, 62, 70, 71, 76, 77, 82, 83, 95
+)
+
+path <- 'C:\\Users\\arrio\\Bases de datos\\INPC\\'
+prefix <- 'Infl prod '
+suffix <- '.txt'
+
+##
+
+g2 <- read.csv("C:/Users/arrio/Bases de datos/INPC/inflacion tabla canasta2.csv")
+
+g2$cfin <- as.numeric(as.character(g2$cfin))
+g2$incr <- as.numeric(as.character(g2$incr))
+
+g2 %>% ggplot( aes(x=ymd(fecha), y=cfin, group=ciudad, color=ciudad)) + geom_line() + 
+ggtitle("Canasta, valor absoluto") + ylab("Importe") +geom_line(size=1) + xlab("dic 2018 - jul 2022")
+outfile <- paste(path,"CANASTA ABS",'.png',sep='')
+ggsave(filename = outfile,device="png",width=350,height=175,units="mm")
+
+g2 %>% ggplot( aes(x=ymd(fecha), y=incr, group=ciudad, color=ciudad)) + geom_line() + 
+ggtitle("Canasta, % incremento") + ylab("% incremento") +geom_line(size=1) + xlab("dic 2018 - jul 2022")
+outfile <- paste(path,"CANASTA PERC",'.png',sep='')
+ggsave(filename = outfile,device="png",width=350,height=175,units="mm")
+
+##
+
+g3 <- read.csv("C:/Users/arrio/Bases de datos/INPC/inflacion tabla productos2.csv",encoding='UTF-8')
+
+g3$precio <- as.numeric(as.character(g3$precio))
+
+for(i in 1:length(names) ) {
+
+	print(names[i])
+	
+	filename <- paste(path,prefix,names[i],suffix,sep='')
+	label <- paste("Precio de mercancia, ", names[i],sep='')
+	subset(g3,cve_prod==codes[i]) %>% ggplot( aes(x=ymd(fecha), y=precio, group=ciudad, color=ciudad)) + 
+		ggtitle(label) + ylab("precio") +geom_line(size=1) + xlab("dic 2018 - jul 2022")
+
+	outfile <- paste(path,names[i],'.png',sep='')
+	#png(filename=outfwdile,width=1100)
+	# poner p a continuacion no genera nada
+
+ 	ggsave(filename = outfile,device="png",width=350,height=175,units="mm")
+
+}
+
+
+
+
